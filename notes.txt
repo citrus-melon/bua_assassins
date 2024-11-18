@@ -1,0 +1,25 @@
+## Flutter Overall State Management/Screen Routing
+
+if logged out or game is null/unpublished:
+    Welcome screen
+else:
+    if player state is eliminated:
+        Game Over screen
+    else if game state is completed:
+        Game Ended screen
+    else if player state is ineligable:
+        Sorry You Can't Join screen
+    else if player state is pending_registration:
+        What Is Your Name screen, then
+        if game state is pre_registration:
+            You're In (Pre-Registration) screen
+        else:
+            Pair NFC Tag screen
+    else if game state is paused:
+        Paused Screen
+    else if game state is registration:
+        You're In screen
+    else if game state is active:
+        Main screen
+    else:
+        Error screen
