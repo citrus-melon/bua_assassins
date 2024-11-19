@@ -37,8 +37,27 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: AppNavigator(),
+      home: AuthGate(),
     );
+  }
+}
+
+class AuthGate extends StatelessWidget {
+  const AuthGate({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+        stream: Supabase.instance.client.auth.onAuthStateChange,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Placeholder();
+          } else if (snapshot.hasData && snapshot.data?.session != null) {
+            return const AppNavigator();
+          } else {
+            return const WelcomeScreen();
+          }
+        });
   }
 }
 
@@ -52,9 +71,7 @@ class AppNavigator extends StatelessWidget {
         final playerState = stateProvider.playerState;
         final gameState = stateProvider.gameState;
 
-        if (playerState == PlayerState.loggedOut ||
-            gameState == null ||
-            gameState == GameState.unpublished) {
+        if (gameState == null || gameState == GameState.unpublished) {
           return const WelcomeScreen();
         } else if (playerState == PlayerState.eliminated) {
           return const EliminatedScreen();

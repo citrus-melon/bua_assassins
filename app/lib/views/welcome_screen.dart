@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -21,6 +22,11 @@ class WelcomeScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Add your onPressed code here!
+                Supabase.instance.client.auth.signInAnonymously(data: {
+                  // 'type': 'player',
+                  // 'game': '1',
+                  // 'name': '',
+                });
               },
               child: const Text('Get Started'),
             ),
