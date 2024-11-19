@@ -9,6 +9,7 @@ import 'package:bua_assassins/views/preregistered_screen.dart';
 import 'package:bua_assassins/views/registered_screen.dart';
 import 'package:bua_assassins/views/undefined_state_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -36,66 +37,77 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: AuthGate(),
+    return MaterialApp.router(
+      routerConfig: _router,
     );
   }
 }
 
-class AuthGate extends StatelessWidget {
-  const AuthGate({super.key});
+final _router = GoRouter(
+  routes: [
+    GoRoute( path: '/welcome', builder: (context, state) => const WelcomeScreen(),
+    ),
+    GoRoute(
+      path: '/eliminated',
+      builder: (context, state) => const EliminatedScreen(),
+    ),
+    GoRoute(
+      path: '/game-concluded',
+      builder: (context, state) => const GameConcludedScreen(),
+    ),
+    GoRoute(
+      path: '/ineligible',
+      builder: (context, state) => const IneligibleScreen(),
+    ),
+    GoRoute(
+      path: '/name-input',
+      builder: (context, state) => const NameInputScreen(),
+    ),
+    GoRoute(
+      path: '/paused',
+      builder: (context, state) => const PausedScreen(),
+    ),
+    GoRoute(
+      path: '/registered',
+      builder: (context, state) => const RegisteredScreen(),
+    ),
+    GoRoute(
+      path: '/in-game',
+      builder: (context, state) => const InGameScreen(),
+    ),
+    GoRoute(
+      path: '/undefined-state',
+      builder: (context, state) => const UndefinedStateScreen(),
+    ),
+  ],
+  redirect: (context, state) {
+    final supabase = Supabase.instance.client;
+    final session = supabase.auth.currentSession;
+    final appStateProvider =
+        Provider.of<AppStateProvider>(context, listen: false);
+    final playerState = appStateProvider.playerState;
+    final gameState = appStateProvider.gameState;
 
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder(
-        stream: Supabase.instance.client.auth.onAuthStateChange,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Placeholder();
-          } else if (snapshot.hasData && snapshot.data?.session != null) {
-            return const AppNavigator();
-          } else {
-            return const WelcomeScreen();
-          }
-        });
-  }
-}
-
-class AppNavigator extends StatelessWidget {
-  const AppNavigator({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<AppStateProvider>(
-      builder: (context, stateProvider, child) {
-        final playerState = stateProvider.playerState;
-        final gameState = stateProvider.gameState;
-
-        if (gameState == null || gameState == GameState.unpublished) {
-          return const WelcomeScreen();
-        } else if (playerState == PlayerState.eliminated) {
-          return const EliminatedScreen();
-        } else if (gameState == GameState.completed) {
-          return const GameConcludedScreen();
-        } else if (playerState == PlayerState.ineligible) {
-          return const IneligibleScreen();
-        } else if (playerState == PlayerState.pendingRegistration) {
-          return const NameInputScreen();
-          // if (gameState == GameState.preRegistration) {
-          //   return const PreregisteredScreen();
-          // } else {
-          //   return const NameInputScreen(); // Navigate to PairNfcScreen after name input
-          // }
-        } else if (gameState == GameState.paused) {
-          return const PausedScreen();
-        } else if (gameState == GameState.registration) {
-          return const RegisteredScreen();
-        } else if (gameState == GameState.active) {
-          return const InGameScreen();
-        } else {
-          return const UndefinedStateScreen();
-        }
-      },
-    );
-  }
-}
+    if (session == null) {
+      return '/welcome';
+    } else if (gameState == null || gameState == GameState.unpublished) {
+      return '/welcome';
+    } else if (playerState == PlayerState.eliminated) {
+      return '/eliminated';
+    } else if (gameState == GameState.completed) {
+      return '/game-concluded';
+    } else if (playerState == PlayerState.ineligible) {
+      return '/ineligible';
+    } else if (playerState == PlayerState.pendingRegistration) {
+      return '/name-input';
+    } else if (gameState == GameState.paused) {
+      return '/paused';
+    } else if (gameState == GameState.registration) {
+      return '/registered';
+    } else if (gameState == GameState.active) {
+      return '/in-game';
+    } else {
+      return '/undefined-state';
+    }
+  },
+);
