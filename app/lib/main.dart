@@ -15,7 +15,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'views/welcome_screen.dart';
 
 Future<void> main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
   await Supabase.initialize(
     url: 'https://uvytjjldwcitkqattdeq.supabase.co',
