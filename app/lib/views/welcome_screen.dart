@@ -23,9 +23,9 @@ class WelcomeScreen extends StatelessWidget {
               onPressed: () {
                 // Add your onPressed code here!
                 Supabase.instance.client.auth.signInAnonymously(data: {
-                  // 'type': 'player',
-                  // 'game': '1',
-                  // 'name': '',
+                  'type': 'player',
+                  'game': '1',
+                  'name': '',
                 });
               },
               child: const Text('Get Started'),
