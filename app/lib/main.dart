@@ -1,7 +1,7 @@
 import 'package:bua_assassins/models.dart';
 import 'package:bua_assassins/views/eliminated_screen.dart';
 import 'package:bua_assassins/views/game_concluded_screen.dart';
-import 'package:bua_assassins/views/in_Game_screen.dart';
+import 'package:bua_assassins/views/in_game_screen.dart';
 import 'package:bua_assassins/views/ineligible_screen.dart';
 import 'package:bua_assassins/views/name_input_screen.dart';
 import 'package:bua_assassins/views/paused_screen.dart';
