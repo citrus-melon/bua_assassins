@@ -70,18 +70,8 @@ final router = GoRouter(
     ),
     GoRoute(
         path: '/registration',
-        redirect: (context, state) {
-          if (state.fullPath == '/registration') {
-            return '/registration/name-input';
-          } else {
-            return null;
-          }
-        },
+        builder: (context, state) => const NameInputScreen(),
         routes: [
-          GoRoute(
-            path: 'name-input',
-            builder: (context, state) => const NameInputScreen(),
-          ),
           GoRoute(
             path: 'pre-registered',
             builder: (context, state) => const PreregisteredScreen(),
@@ -134,7 +124,7 @@ final router = GoRouter(
           return '/registration/pair-nfc';
         }
       } else {
-        return '/registration/name-input';
+        return '/registration';
       }
     } else if (gameState == GameState.paused) {
       return '/paused';
