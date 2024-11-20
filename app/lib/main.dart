@@ -87,8 +87,8 @@ final _router = GoRouter(
     final session = supabase.auth.currentSession;
     final appStateProvider =
         Provider.of<AppStateProvider>(context, listen: false);
-    final playerState = appStateProvider.playerState;
-    final gameState = appStateProvider.gameState;
+    final playerState = appStateProvider._playerState;
+    final gameState = appStateProvider._gameState;
 
     if (session == null) {
       return '/welcome';
@@ -112,5 +112,4 @@ final _router = GoRouter(
       return '/undefined-state';
     }
   },
-  refreshListenable: 
 );

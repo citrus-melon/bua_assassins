@@ -1,11 +1,28 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 enum PlayerState {
-  loggedOut,
   eliminated,
   ineligible,
   pendingRegistration,
-  active,
+  active;
+
+  factory PlayerState.fromString(String value) {
+    switch (value) {
+      case 'eliminated':
+        return PlayerState.eliminated;
+      case 'ineligible':
+        return PlayerState.ineligible;
+      case 'pending_registration':
+        return PlayerState.pendingRegistration;
+      case 'active':
+        return PlayerState.active;
+      default:
+        throw ArgumentError('Invalid player state: $value');
+    }
+  }
 }
 
 enum GameState {
@@ -14,34 +31,98 @@ enum GameState {
   registration,
   active,
   paused,
-  completed,
+  completed;
+
+  factory GameState.fromString(String value) {
+    switch (value) {
+      case 'unpublished':
+        return GameState.unpublished;
+      case 'pre_registration':
+        return GameState.preRegistration;
+      case 'registration':
+        return GameState.registration;
+      case 'active':
+        return GameState.active;
+      case 'paused':
+        return GameState.paused;
+      case 'completed':
+        return GameState.completed;
+      default:
+        throw ArgumentError('Invalid game state: $value');
+    }
+  }
 }
 
-class AppState {
-  final PlayerState playerState;
-  final GameState? gameState;
-
-  AppState({required this.playerState, this.gameState});
-}
+final supabase = Supabase.instance.client;
 
 class AppStateProvider with ChangeNotifier {
-  PlayerState _playerState = PlayerState.active;
-  GameState? _gameState = GameState.registration;
+  PlayerState? _playerState;
+  GameState? _gameState;
+  String? _playerName;
+  DateTime? _gameStartTime;
 
-  PlayerState get playerState => _playerState;
+  PlayerState? get playerState => _playerState;
+  String? get playerName => _playerName;
   GameState? get gameState => _gameState;
+  DateTime? get gameStartTime => _gameStartTime;
 
   void updatePlayerState(PlayerState state) {
     _playerState = state;
+  }
+
+  Future<void> refresh() async {
+    final game = await supabase.from('games').select('*').single();
+    final player = await supabase
+        .from('players')
+        .select('*')
+        .eq('id', supabase.auth.currentUser!.id)
+        .single();
+
+    _gameState = GameState.fromString(game['state']);
+    _playerState = PlayerState.fromString(player['state']);
+    _playerName = player['name'];
+    _gameStartTime = game['starts_at'];
     notifyListeners();
   }
 
-  void updateGameState(GameState? state) {
-    _gameState = state;
-    notifyListeners();
+  Future<void> updatePlayerName(String name) async {
+    await supabase.from('players').upsert({
+      'id': supabase.auth.currentUser!.id,
+      'name': name,
+    });
+    await refresh();
+  }
+
+  Future<void> setNfcTag(String tag) async {
+    await supabase.from('players').upsert({
+      'id': supabase.auth.currentUser!.id,
+      'nfc_tag': tag,
+    });
+    await refresh();
+  }
+
+  Future<void> setPlayerState(PlayerState state) async {
+    await supabase.from('players').upsert({
+      'id': supabase.auth.currentUser!.id,
+      'state': state.toString().split('.').last,
+    });
+    await refresh();
   }
 }
 
-class AuthListener extends ChangeNotifier {
-  
+class AuthNotifier extends ChangeNotifier {
+  late final StreamSubscription<AuthState> _subscription;
+
+  AuthNotifier() {
+    _subscription = Supabase.instance.client.auth.onAuthStateChange
+        .listen((AuthState state) {
+      notifyListeners();
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
 }
