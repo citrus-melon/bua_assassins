@@ -9,7 +9,7 @@ enum PlayerState {
   pendingRegistration,
   active;
 
-  factory PlayerState.fromString(String value) {
+  static PlayerState? fromString(String value) {
     switch (value) {
       case 'eliminated':
         return PlayerState.eliminated;
@@ -20,7 +20,8 @@ enum PlayerState {
       case 'active':
         return PlayerState.active;
       default:
-        throw ArgumentError('Invalid player state: $value');
+        return null;
+      // throw ArgumentError('Invalid player state: $value');
     }
   }
 }
@@ -33,7 +34,7 @@ enum GameState {
   paused,
   completed;
 
-  factory GameState.fromString(String value) {
+  static GameState? fromString(String value) {
     switch (value) {
       case 'unpublished':
         return GameState.unpublished;
@@ -48,7 +49,8 @@ enum GameState {
       case 'completed':
         return GameState.completed;
       default:
-        throw ArgumentError('Invalid game state: $value');
+        return null;
+      // throw ArgumentError('Invalid game state: $value');
     }
   }
 }
@@ -85,44 +87,24 @@ class AppStateProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updatePlayerName(String name) async {
-    await supabase.from('players').upsert({
-      'id': supabase.auth.currentUser!.id,
+  Future<void> setPlayerName(String name) async {
+    await supabase.from('players').update({
       'name': name,
-    });
+    }).eq('id', supabase.auth.currentUser!.id);
     await refresh();
   }
 
   Future<void> setNfcTag(String tag) async {
-    await supabase.from('players').upsert({
-      'id': supabase.auth.currentUser!.id,
+    await supabase.from('players').update({
       'nfc_tag': tag,
-    });
+    }).eq('id', supabase.auth.currentUser!.id);
     await refresh();
   }
 
-  Future<void> setPlayerState(PlayerState state) async {
-    await supabase.from('players').upsert({
-      'id': supabase.auth.currentUser!.id,
-      'state': state.toString().split('.').last,
-    });
+  Future<void> setPlayerState(String state) async {
+    await supabase.from('players').update({
+      'state': state,
+    }).eq('id', supabase.auth.currentUser!.id);
     await refresh();
-  }
-}
-
-class AuthNotifier extends ChangeNotifier {
-  late final StreamSubscription<AuthState> _subscription;
-
-  AuthNotifier() {
-    _subscription = Supabase.instance.client.auth.onAuthStateChange
-        .listen((AuthState state) {
-      notifyListeners();
-    });
-  }
-
-  @override
-  void dispose() {
-    _subscription.cancel();
-    super.dispose();
   }
 }

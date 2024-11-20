@@ -1,8 +1,17 @@
-// import 'package:bua_assassins/models.dart';
+import 'package:bua_assassins/models.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
-class NameInputScreen extends StatelessWidget {
+class NameInputScreen extends StatefulWidget {
   const NameInputScreen({super.key});
+
+  @override
+  NameInputScreenState createState() => NameInputScreenState();
+}
+
+class NameInputScreenState extends State<NameInputScreen> {
+  String _playerName = '';
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +24,19 @@ class NameInputScreen extends StatelessWidget {
             const Text('Enter your name:'),
             TextField(
               onChanged: (name) {
-                // context.read<AppStateProvider>().setPlayerName(name);
+                setState(() {
+                  _playerName = name;
+                });
               },
             ),
             ElevatedButton(
               onPressed: () {
+                Provider.of<AppStateProvider>(context, listen: false)
+                    .setPlayerName(_playerName);
                 // context
                 //     .read<AppStateProvider>()
                 //     .setPlayerState(PlayerState.registered);
+                context.go('/registration/pair-nfc');
               },
               child: const Text('Submit'),
             ),

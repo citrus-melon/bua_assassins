@@ -1,4 +1,6 @@
+import 'package:bua_assassins/models.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -27,6 +29,7 @@ class WelcomeScreen extends StatelessWidget {
                   'game': '1',
                   'name': '',
                 });
+                Provider.of<AppStateProvider>(context, listen: false).refresh();
               },
               child: const Text('Get Started'),
             ),

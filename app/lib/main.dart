@@ -4,6 +4,7 @@ import 'package:bua_assassins/views/game_concluded_screen.dart';
 import 'package:bua_assassins/views/in_game_screen.dart';
 import 'package:bua_assassins/views/ineligible_screen.dart';
 import 'package:bua_assassins/views/name_input_screen.dart';
+import 'package:bua_assassins/views/pair_nfc_screen.dart';
 import 'package:bua_assassins/views/paused_screen.dart';
 import 'package:bua_assassins/views/preregistered_screen.dart';
 import 'package:bua_assassins/views/registered_screen.dart';
@@ -24,26 +25,32 @@ Future<void> main() async {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2eXRqamxkd2NpdGtxYXR0ZGVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMDc0NDAsImV4cCI6MjA0Njc4MzQ0MH0.yLxvsX-brf2605syFIPR12okvRpuxjpEZM1cCDd6jMQ',
   );
 
+  AppStateProvider appStateProvider = AppStateProvider();
+
+  Supabase.instance.client.auth.onAuthStateChange.listen((AuthState state) {
+    router.refresh();
+  });
+
+  appStateProvider.addListener(() {
+    router.refresh();
+  });
+
+  if (Supabase.instance.client.auth.currentSession != null) {
+    appStateProvider.refresh();
+  }
+
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => AppStateProvider(),
-      child: const MainApp(),
-    ),
+    MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(value: appStateProvider),
+        ],
+        child: MaterialApp.router(
+          routerConfig: router,
+        )),
   );
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: _router,
-    );
-  }
-}
-
-final _router = GoRouter(
+final router = GoRouter(
   routes: [
     GoRoute(
       path: '/welcome',
@@ -62,9 +69,28 @@ final _router = GoRouter(
       builder: (context, state) => const IneligibleScreen(),
     ),
     GoRoute(
-      path: '/name-input',
-      builder: (context, state) => const NameInputScreen(),
-    ),
+        path: '/registration',
+        redirect: (context, state) {
+          if (state.fullPath == '/registration') {
+            return '/registration/name-input';
+          } else {
+            return null;
+          }
+        },
+        routes: [
+          GoRoute(
+            path: 'name-input',
+            builder: (context, state) => const NameInputScreen(),
+          ),
+          GoRoute(
+            path: 'pre-registered',
+            builder: (context, state) => const PreregisteredScreen(),
+          ),
+          GoRoute(
+            path: 'pair-nfc',
+            builder: (context, state) => const PairNfcScreen(),
+          ),
+        ]),
     GoRoute(
       path: '/paused',
       builder: (context, state) => const PausedScreen(),
@@ -84,13 +110,12 @@ final _router = GoRouter(
   ],
   redirect: (context, state) {
     final supabase = Supabase.instance.client;
-    final session = supabase.auth.currentSession;
     final appStateProvider =
         Provider.of<AppStateProvider>(context, listen: false);
-    final playerState = appStateProvider._playerState;
-    final gameState = appStateProvider._gameState;
+    final playerState = appStateProvider.playerState;
+    final gameState = appStateProvider.gameState;
 
-    if (session == null) {
+    if (supabase.auth.currentSession == null) {
       return '/welcome';
     } else if (gameState == null || gameState == GameState.unpublished) {
       return '/welcome';
@@ -101,7 +126,16 @@ final _router = GoRouter(
     } else if (playerState == PlayerState.ineligible) {
       return '/ineligible';
     } else if (playerState == PlayerState.pendingRegistration) {
-      return '/name-input';
+      if (state.fullPath == '/registration/pre-registered' ||
+          state.fullPath == '/registration/pair-nfc') {
+        if (appStateProvider.gameState == GameState.preRegistration) {
+          return '/registration/pre-registered';
+        } else {
+          return '/registration/pair-nfc';
+        }
+      } else {
+        return '/registration/name-input';
+      }
     } else if (gameState == GameState.paused) {
       return '/paused';
     } else if (gameState == GameState.registration) {
