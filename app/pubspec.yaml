@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   go_router: ^14.6.0
+  nfc_manager: ^3.5.0
   provider: ^6.1.2
   supabase_flutter: ^2.8.1
 
