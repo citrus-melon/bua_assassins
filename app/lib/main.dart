@@ -45,7 +45,9 @@ class MainApp extends StatelessWidget {
 
 final _router = GoRouter(
   routes: [
-    GoRoute( path: '/welcome', builder: (context, state) => const WelcomeScreen(),
+    GoRoute(
+      path: '/welcome',
+      builder: (context, state) => const WelcomeScreen(),
     ),
     GoRoute(
       path: '/eliminated',
@@ -110,4 +112,5 @@ final _router = GoRouter(
       return '/undefined-state';
     }
   },
+  refreshListenable: 
 );

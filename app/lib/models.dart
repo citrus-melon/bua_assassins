@@ -41,3 +41,7 @@ class AppStateProvider with ChangeNotifier {
     notifyListeners();
   }
 }
+
+class AuthListener extends ChangeNotifier {
+  
+}
