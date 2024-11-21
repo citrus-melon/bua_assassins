@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:go_router/go_router.dart';
 
 class RegisteredScreen extends StatelessWidget {
-  const RegisteredScreen({Key? key}) : super(key: key);
+  const RegisteredScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,5 @@
-import 'package:bua_assassins/models.dart';
 import 'package:flutter/material.dart';
 import 'package:nfc_manager/nfc_manager.dart';
-import 'package:provider/provider.dart';
 
 class DemoModeScreen extends StatefulWidget {
   const DemoModeScreen({super.key});
