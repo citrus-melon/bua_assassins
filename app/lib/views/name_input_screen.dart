@@ -16,12 +16,13 @@ class NameInputScreenState extends State<NameInputScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Enter your name')),
+      appBar: AppBar(title: const Text("What's your name?")),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text('Enter your name:'),
+            const Text(
+                'Please enter the name others know you by. The game depends on everyone knowing who you are!'),
             TextField(
               onChanged: (name) {
                 setState(() {
@@ -38,7 +39,7 @@ class NameInputScreenState extends State<NameInputScreen> {
                 //     .setPlayerState(PlayerState.registered);
                 context.go('/registration/pair-nfc');
               },
-              child: const Text('Submit'),
+              child: const Text('Next'),
             ),
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:bua_assassins/models.dart';
+import 'package:bua_assassins/views/demo_mode_screen.dart';
 import 'package:bua_assassins/views/eliminated_screen.dart';
 import 'package:bua_assassins/views/game_concluded_screen.dart';
 import 'package:bua_assassins/views/in_game_screen.dart';
@@ -53,6 +54,14 @@ Future<void> main() async {
 final router = GoRouter(
   routes: [
     GoRoute(
+      path: '/',
+      builder: (context, state) => const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+    ),
+    GoRoute(
       path: '/welcome',
       builder: (context, state) => const WelcomeScreen(),
     ),
@@ -86,9 +95,12 @@ final router = GoRouter(
       builder: (context, state) => const PausedScreen(),
     ),
     GoRoute(
-      path: '/registered',
-      builder: (context, state) => const RegisteredScreen(),
-    ),
+        path: '/registered',
+        builder: (context, state) => const RegisteredScreen(),
+        routes: [
+          GoRoute(
+              path: 'demo', builder: (context, state) => const DemoModeScreen())
+        ]),
     GoRoute(
       path: '/in-game',
       builder: (context, state) => const InGameScreen(),
@@ -107,6 +119,8 @@ final router = GoRouter(
 
     if (supabase.auth.currentSession == null) {
       return '/welcome';
+    } else if (appStateProvider.initialized == false) {
+      return '/';
     } else if (gameState == null || gameState == GameState.unpublished) {
       return '/welcome';
     } else if (playerState == PlayerState.eliminated) {
@@ -129,6 +143,8 @@ final router = GoRouter(
     } else if (gameState == GameState.paused) {
       return '/paused';
     } else if (gameState == GameState.registration) {
+      print(state.fullPath);
+      if (state.fullPath?.startsWith('/registered') == true) return null;
       return '/registered';
     } else if (gameState == GameState.active) {
       return '/in-game';

@@ -68,6 +68,8 @@ class AppStateProvider with ChangeNotifier {
   GameState? get gameState => _gameState;
   DateTime? get gameStartTime => _gameStartTime;
 
+  bool initialized = false;
+
   void updatePlayerState(PlayerState state) {
     _playerState = state;
   }
@@ -80,6 +82,7 @@ class AppStateProvider with ChangeNotifier {
         .eq('id', supabase.auth.currentUser!.id)
         .single();
 
+    initialized = true;
     _gameState = GameState.fromString(game['state']);
     _playerState = PlayerState.fromString(player['state']);
     _playerName = player['name'];
@@ -105,6 +108,8 @@ class AppStateProvider with ChangeNotifier {
     await supabase.from('players').update({
       'state': state,
     }).eq('id', supabase.auth.currentUser!.id);
+    initialized = false;
+    notifyListeners();
     await refresh();
   }
 }
