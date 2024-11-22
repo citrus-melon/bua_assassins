@@ -25,7 +25,7 @@ export const sessionStore = readable<Session | null>(null, set => {
     }
 });
 
-export let session: Session | null = null;
+let session: Session | null = null;
 sessionStore.subscribe(value => session = value);
 
 const internalPlayerStore = writable<Tables<'players'> | null>(null);
@@ -95,6 +95,7 @@ export async function eliminateTarget(nfcTag: string) {
 export const playerStore = readonly(internalPlayerStore);
 
 const internalGameStore = writable<Tables<'games'> | null>(null);
+export const gameStore = readonly(internalGameStore);
 
 async function fetchGame() {
     const userId = session?.user.id;
