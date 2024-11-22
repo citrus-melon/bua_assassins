@@ -1,7 +1,7 @@
 <script lang="ts">
   import { quadIn } from "svelte/easing";
   import { fly } from "svelte/transition";
-  import { playerStore, sessionStore, gameStore } from "./state";
+  import { playerStore, sessionStore, gameStore, nfcOperation } from "./state";
   import Nav from "$lib/components/ui/Nav.svelte";
   import WelcomePage from "./pages/WelcomePage.svelte";
   import PausedPage from "./pages/PausedPage.svelte";
@@ -18,6 +18,7 @@
 <div class="p-4">
 {#if !$sessionStore || !$gameStore || !$playerStore || $gameStore.state === "unpublished"}
   <WelcomePage />
+<!-- {:else if $nfcOperation.} -->
 {:else}
   <Nav />
   {#if $playerStore.state === "eliminated"}

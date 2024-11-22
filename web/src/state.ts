@@ -108,3 +108,7 @@ async function fetchGame() {
 export async function refreshGame() {
     internalGameStore.set(await fetchGame());
 }
+
+export const showTutorialStore = writable<boolean>(false);
+
+export const nfcOperation = writable<null | 'pending' | Awaited<ReturnType<typeof eliminateTarget>>>(null);
