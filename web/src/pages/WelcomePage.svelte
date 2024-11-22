@@ -2,7 +2,21 @@
     import Button from "$lib/components/ui/button/button.svelte";
     import buaLogo from "$lib/assets/bua-transparent.png";
     import Nav from "$lib/components/ui/Nav.svelte";
+    import { gameId, refreshGame, refreshPlayer, supabase } from "../state";
+    import LoadingOverlay from "$lib/components/ui/LoadingOverlay.svelte";
 
+    let loading = $state(false);
+
+    const join = async () => {
+        loading = true;
+        await supabase.auth.signInAnonymously({ options: { data: {
+            'type': 'player',
+            'game': gameId,
+            'name': '',
+        }}})
+        refreshGame();
+        refreshPlayer();
+    }
 </script>
 
 <main class="h-lvh bg-blue-950 text-white w-full">
@@ -14,7 +28,11 @@
     </div>
     <div class="text-center text-2xl">Each player is assigned a target</div>
     <div class="w-fit mx-auto">
-        <Button class="bg-[#dd0055] text-blue-950 text-2xl mb-8 p-8 rounded-full border-8 border-[#dd0055] hover:bg-blue-950 hover:text-[#dd0055]">Join</Button>
+        <Button onclick={join} class="bg-[#dd0055] text-blue-950 text-2xl mb-8 p-8 rounded-full border-8 border-[#dd0055] hover:bg-blue-950 hover:text-[#dd0055]">Join</Button>
     </div>
 </div>
 </main>
+
+{#if loading}
+    <LoadingOverlay />
+{/if}

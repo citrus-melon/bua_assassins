@@ -9,7 +9,7 @@ export const supabase = createClient<Database>(
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2eXRqamxkd2NpdGtxYXR0ZGVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMDc0NDAsImV4cCI6MjA0Njc4MzQ0MH0.yLxvsX-brf2605syFIPR12okvRpuxjpEZM1cCDd6jMQ'
 );
 
-export const gameId = '1';
+export const gameId: number = parseInt(import.meta.env.VITE_GAME_ID) ?? 1;
 
 export const sessionStore = readable<Session | null>(null, set => {
     supabase.auth.getSession().then(session => {

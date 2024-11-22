@@ -2,8 +2,6 @@
   import { quadIn } from "svelte/easing";
   import { fly } from "svelte/transition";
   import { playerStore, sessionStore, gameStore } from "./state";
-  import NameInputPage from "./pages/NameInputPage.svelte";
-  import PairNfcPage from "./pages/PairNfcPage.svelte";
   import Nav from "$lib/components/ui/Nav.svelte";
   import WelcomePage from "./pages/WelcomePage.svelte";
   import PausedPage from "./pages/PausedPage.svelte";
@@ -11,13 +9,30 @@
   import GameConcludedPage from "./pages/GameConcludedPage.svelte";
   import EliminatedPage from "./pages/EliminatedPage.svelte";
   import InGamePage from "./pages/InGamePage.svelte";
+    import IneligiblePage from "./pages/IneligiblePage.svelte";
+    import UndefinedStatePage from "./pages/UndefinedStatePage.svelte";
+    import RegistrationFlow from "./pages/RegistrationFlow.svelte";
 
 </script>
 
-{#if $sessionStore}
-  
+{#if !$sessionStore || !$gameStore || $gameStore.state === "unpublished"}
+  <WelcomePage />
+{:else if $playerStore?.state === "eliminated"}
+  <EliminatedPage />
+{:else if $gameStore.state === "completed"}
+  <GameConcludedPage />
+{:else if $playerStore?.state === "ineligible"}
+  <IneligiblePage />
+{:else if $playerStore?.state === "pending_registration"}
+  <RegistrationFlow />
+{:else if $gameStore.state === "paused"}
+  <PausedPage />
+{:else if $gameStore.state === "registration"}
+  <RegisteredPage />
+{:else if $gameStore.state === "active"}
+  <InGamePage />
 {:else}
-
+<UndefinedStatePage />
 {/if}
 
 <!-- {#key $currentPage}
