@@ -6,9 +6,15 @@
   import NameInputPage from "./pages/NameInputPage.svelte";
     import PairNfcPage from "./pages/PairNFCPage.svelte";
     import Nav from "$lib/components/ui/Nav.svelte";
+    import WelcomePage from "./pages/WelcomePage.svelte";
+    import PausedPage from "./pages/PausedPage.svelte";
+    import RegisteredPage from "./pages/RegisteredPage.svelte";
+    import GameConcludedPage from "./pages/GameConcludedPage.svelte";
+    import EliminatedPage from "./pages/EliminatedPage.svelte";
+    import InGamePage from "./pages/InGamePage.svelte";
 
     const routeHash = () => {
-          $currentPage = PairNfcPage;
+          $currentPage = InGamePage;
       }
       routeHash();
       window.addEventListener('hashchange', routeHash);
