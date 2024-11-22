@@ -1,7 +1,7 @@
 <script lang="ts">
   import { quadIn } from "svelte/easing";
   import { fly } from "svelte/transition";
-  import { playerStore, sessionStore, gameStore, nfcOperation } from "./state";
+  import { playerStore, sessionStore, gameStore, nfcOperation, showTutorialStore } from "./state";
   import Nav from "$lib/components/ui/Nav.svelte";
   import WelcomePage from "./pages/WelcomePage.svelte";
   import PausedPage from "./pages/PausedPage.svelte";
@@ -9,9 +9,10 @@
   import GameConcludedPage from "./pages/GameConcludedPage.svelte";
   import EliminatedPage from "./pages/EliminatedPage.svelte";
   import InGamePage from "./pages/InGamePage.svelte";
-    import IneligiblePage from "./pages/IneligiblePage.svelte";
-    import UndefinedStatePage from "./pages/UndefinedStatePage.svelte";
-    import RegistrationFlow from "./pages/RegistrationFlow.svelte";
+  import IneligiblePage from "./pages/IneligiblePage.svelte";
+  import UndefinedStatePage from "./pages/UndefinedStatePage.svelte";
+  import RegistrationFlow from "./pages/RegistrationFlow.svelte";
+  import HowToPlayPage from "./pages/HowToPlayPage.svelte";
 
 </script>
 
@@ -27,6 +28,8 @@
     <GameConcludedPage />
   {:else if $playerStore.state === "ineligible"}
     <IneligiblePage />
+  {:else if $showTutorialStore === true}
+    <HowToPlayPage />
   {:else if $playerStore.state === "pending_registration"}
     <RegistrationFlow />
   {:else if $gameStore.state === "paused"}
