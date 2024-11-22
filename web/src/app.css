@@ -11,7 +11,7 @@ html, body, #app {
     --background: 282 100% 7%;
     --foreground: 0 0% 98%;
  
-    --muted: 283 81% 12%;
+    --muted: 282 48% 25%;
     --muted-foreground: 0 0% 63.9%;
  
     --popover: 282 100% 7%;
@@ -20,13 +20,13 @@ html, body, #app {
     --card: 282 100% 7%;
     --card-foreground: 0 0% 98%;
  
-    --border: 283 81% 12%;
-    --input: 283 81% 12%;
+    --border: 282 48% 25%;
+    --input: 282 48% 25%;
  
     --primary: 337 100% 43%;
     --primary-foreground: 0 0% 9%;
  
-    --secondary: 283 81% 12%;
+    --secondary: 282 48% 25%;
     --secondary-foreground: 0 0% 98%;
  
     --accent: 275 100% 92%;
