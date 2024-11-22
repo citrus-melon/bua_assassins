@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body, #app {
-  height: 100%;
-}
  
 @layer base {
   :root {
@@ -39,13 +36,16 @@ html, body, #app {
  
     --radius: 0.5rem;
   }
-}
- 
-@layer base {
+
+  html, body, #app {
+    height: 100%;
+  }
+
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
+    color-scheme: dark;
   }
 }

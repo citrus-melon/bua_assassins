@@ -16,7 +16,7 @@
     width: 100%;
     height: 100%;
     z-index: 2;
-    background-color: #180022;
+    @apply bg-background;
     opacity: 80%;
     display: grid;
     place-items: center;
@@ -25,7 +25,8 @@
   .loader {
     width: 48px;
     height: 48px;
-    border: 5px solid #dd0055;
+    border: 5px solid;
+    @apply border-primary;
     border-bottom-color: transparent;
     border-radius: 50%;
     display: inline-block;
