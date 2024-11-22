@@ -11,28 +11,24 @@
     let value = $state('');
     let loading = $state(false);
 
-    const submit = () => {
+    let { nextPage }: { nextPage: () => void } = $props();
+
+    const submit = async () => {
         if (value === '') {
             alert('Please enter your name');
             return;
         }
         
         loading = true;
-        setPlayerName(value);
+        await setPlayerName(value);
+        nextPage();
     }
 </script>
 
 <main>
-    <h1>What's your name</h1>
-    <form method="POST" onsubmit={submit}>
-        <FormField name="name">
-          <FormLabel>name</FormLabel>
-         <FormDescription />
-            <Input type="text" bind:value={value} />
-         <FormFieldErrors />
-        </FormField>
-        <FormButton>Next</FormButton>
-    </form>
+    <h1>What's your name?</h1>
+        <Input type="text" bind:value={value} />
+        <FormButton onclick={submit}>Next</FormButton>
     {#if loading}
         <LoadingOverlay />
     {/if}

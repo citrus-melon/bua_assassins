@@ -15,25 +15,30 @@
 
 </script>
 
-{#if !$sessionStore || !$gameStore || $gameStore.state === "unpublished"}
+<div class="p-4">
+{#if !$sessionStore || !$gameStore || !$playerStore || $gameStore.state === "unpublished"}
   <WelcomePage />
-{:else if $playerStore?.state === "eliminated"}
-  <EliminatedPage />
-{:else if $gameStore.state === "completed"}
-  <GameConcludedPage />
-{:else if $playerStore?.state === "ineligible"}
-  <IneligiblePage />
-{:else if $playerStore?.state === "pending_registration"}
-  <RegistrationFlow />
-{:else if $gameStore.state === "paused"}
-  <PausedPage />
-{:else if $gameStore.state === "registration"}
-  <RegisteredPage />
-{:else if $gameStore.state === "active"}
-  <InGamePage />
 {:else}
-<UndefinedStatePage />
+  <Nav />
+  {#if $playerStore.state === "eliminated"}
+    <EliminatedPage />
+  {:else if $gameStore.state === "completed"}
+    <GameConcludedPage />
+  {:else if $playerStore.state === "ineligible"}
+    <IneligiblePage />
+  {:else if $playerStore.state === "pending_registration"}
+    <RegistrationFlow />
+  {:else if $gameStore.state === "paused"}
+    <PausedPage />
+  {:else if $gameStore.state === "registration"}
+    <RegisteredPage />
+  {:else if $gameStore.state === "active"}
+    <InGamePage />
+  {:else}
+    <UndefinedStatePage />
+  {/if}
 {/if}
+</div>
 
 <!-- {#key $currentPage}
   <div

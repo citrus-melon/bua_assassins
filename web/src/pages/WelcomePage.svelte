@@ -19,8 +19,6 @@
     }
 </script>
 
-<main class="h-lvh bg-blue-950 text-white w-full">
-<Nav />
 <div class="container w-fit h-[75vh] mx-auto flex flex-col justify-between">
     <div>
         <img src={buaLogo} alt="BUA Logo" height=500 width=500 class="mx-auto mt-8"/>
@@ -31,7 +29,6 @@
         <Button onclick={join} class="bg-[#dd0055] text-blue-950 text-2xl mb-8 p-8 rounded-full border-8 border-[#dd0055] hover:bg-blue-950 hover:text-[#dd0055]">Join</Button>
     </div>
 </div>
-</main>
 
 {#if loading}
     <LoadingOverlay />

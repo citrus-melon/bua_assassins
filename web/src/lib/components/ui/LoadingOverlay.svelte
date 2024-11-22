@@ -5,7 +5,7 @@
 
 <div class="overlay" transition:fade={{duration: 200, easing: quadOut}}>
   <span class="loader"></span>
-  <span class="visually-hidden">Loading</span>
+  <span class="sr-only">Loading</span>
 </div>
 
 <style>
@@ -16,7 +16,7 @@
     width: 100%;
     height: 100%;
     z-index: 2;
-    background-color: var(--background);
+    background-color: #180022;
     opacity: 80%;
     display: grid;
     place-items: center;
@@ -25,7 +25,7 @@
   .loader {
     width: 48px;
     height: 48px;
-    border: 5px solid var(--accent);
+    border: 5px solid #dd0055;
     border-bottom-color: transparent;
     border-radius: 50%;
     display: inline-block;

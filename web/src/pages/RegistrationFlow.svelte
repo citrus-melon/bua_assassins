@@ -8,7 +8,7 @@ import NameInputPage from "./NameInputPage.svelte";
 </script>
 
 {#if step === 0}
-    <NameInputPage />
+    <NameInputPage nextPage={() => step = 1}/>
 {:else}
     {#if $gameStore?.state === "pre_registration"}
         <PreregisteredPage />
