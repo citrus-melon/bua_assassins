@@ -9,12 +9,8 @@
 
     let { nextPage }: { nextPage: () => void } = $props();
 
-    const submit = async () => {
-        if (value === '') {
-            alert('Please enter your name');
-            return;
-        }
-        
+    const submit = async (e: SubmitEvent) => {
+        e.preventDefault();
         loading = true;
         await setPlayerName(value);
         nextPage();
@@ -22,9 +18,14 @@
 </script>
 
 <main>
-    <h1>What's your name?</h1>
-    <Input type="text" bind:value={value} />
-    <FormButton onclick={submit}>Next</FormButton>
+    <h1 class="text-5xl font-bold my-8">What's your name?</h1>
+    <p>Please enter the name others know you by. The game depends on everyone knowing who you are!</p>
+    <form onsubmit={submit}>
+        <Input type="text" bind:value={value} class="my-4" />
+        <div class="flex justify-end">
+            <FormButton disabled={value === ''}>Next</FormButton>
+        </div>
+    </form>
     {#if loading}
         <LoadingOverlay />
     {/if}
