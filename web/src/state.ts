@@ -115,3 +115,7 @@ export const nfcOperation = writable<null | 'pending' | { success: boolean, resu
     Awaited<ReturnType<typeof eliminateTarget>>}>(null);
 
 export const previousTargetStore = writable<string | null>();
+
+export const targetStore = readonly(internalTargetStore);
+
+export const isTargetShown = writable<boolean>(false);
