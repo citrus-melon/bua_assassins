@@ -18,37 +18,41 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'views/welcome_screen.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  // WidgetsFlutterBinding.ensureInitialized();
 
-  await Supabase.initialize(
-    url: 'https://uvytjjldwcitkqattdeq.supabase.co',
-    anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2eXRqamxkd2NpdGtxYXR0ZGVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMDc0NDAsImV4cCI6MjA0Njc4MzQ0MH0.yLxvsX-brf2605syFIPR12okvRpuxjpEZM1cCDd6jMQ',
-  );
+  // await Supabase.initialize(
+  //   url: 'https://uvytjjldwcitkqattdeq.supabase.co',
+  //   anonKey:
+  //       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2eXRqamxkd2NpdGtxYXR0ZGVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMDc0NDAsImV4cCI6MjA0Njc4MzQ0MH0.yLxvsX-brf2605syFIPR12okvRpuxjpEZM1cCDd6jMQ',
+  // );
 
-  AppStateProvider appStateProvider = AppStateProvider();
+  // AppStateProvider appStateProvider = AppStateProvider();
 
-  Supabase.instance.client.auth.onAuthStateChange.listen((AuthState state) {
-    router.refresh();
-  });
+  // Supabase.instance.client.auth.onAuthStateChange.listen((AuthState state) {
+  //   router.refresh();
+  // });
 
-  appStateProvider.addListener(() {
-    router.refresh();
-  });
+  // appStateProvider.addListener(() {
+  //   router.refresh();
+  // });
 
-  if (Supabase.instance.client.auth.currentSession != null) {
-    appStateProvider.refresh();
-  }
+  // if (Supabase.instance.client.auth.currentSession != null) {
+  //   appStateProvider.refresh();
+  // }
 
-  runApp(
-    MultiProvider(
-        providers: [
-          ChangeNotifierProvider.value(value: appStateProvider),
-        ],
-        child: MaterialApp.router(
-          routerConfig: router,
-        )),
-  );
+  // runApp(
+  //   MultiProvider(
+  //       providers: [
+  //         ChangeNotifierProvider.value(value: appStateProvider),
+  //       ],
+  //       child: MaterialApp.router(
+  //         routerConfig: router,
+  //       )),
+  // );
+
+  runApp(const MaterialApp(
+    home: PairNfcScreen(),
+  ));
 }
 
 final router = GoRouter(

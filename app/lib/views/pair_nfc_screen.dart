@@ -1,7 +1,8 @@
-import 'package:bua_assassins/models.dart';
+// import 'package:bua_assassins/models.dart';
 import 'package:flutter/material.dart';
 import 'package:nfc_manager/nfc_manager.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class PairNfcScreen extends StatefulWidget {
   const PairNfcScreen({super.key});
@@ -12,6 +13,7 @@ class PairNfcScreen extends StatefulWidget {
 
 class _PairNfcScreenState extends State<PairNfcScreen> {
   bool nfcSupported = false;
+  String lastUuid = 'No tag yet';
 
   @override
   void initState() {
@@ -48,34 +50,25 @@ class _PairNfcScreenState extends State<PairNfcScreen> {
             'Bring your phone near your own NFC "target" sticker to pair it you.',
         onDiscovered: (NfcTag tag) async {
           Ndef? ndef = Ndef.from(tag);
-          if (ndef == null) {
+          if (ndef == null || !ndef.isWritable) {
             _showErrorDialog();
             return;
           }
 
-          final ndefMessage = ndef.cachedMessage;
-          if (ndefMessage == null || ndefMessage.records.isEmpty) {
-            _showErrorDialog();
-            return;
-          }
+          String uuid = (const Uuid()).v4();
 
-          final ndefRecord = ndefMessage.records.first;
-          final payload = ndefRecord.payload;
-          final uri =
-              Uri.parse("https://${String.fromCharCodes(payload.skip(1))}");
-          print(uri.toString());
-          if (uri.host == 'assassins.citrusmelon.dev' &&
-              uri.pathSegments.length == 2 &&
-              uri.pathSegments.first == 'tag') {
-            final uuid = uri.pathSegments[1];
-            // Do something with the UUID
-            print('UUID: $uuid');
+          NdefMessage message = NdefMessage([
+            NdefRecord.createUri(
+                Uri.parse('https://assassins.citrusmelon.dev/tag/$uuid')),
+          ]);
 
-            await Provider.of<AppStateProvider>(context, listen: false)
-                .setNfcTag(uuid);
-            await Provider.of<AppStateProvider>(context, listen: false)
-                .setPlayerState('active');
-          } else {
+          try {
+            await ndef.write(message);
+            setState(() {
+              lastUuid = uuid;
+            });
+            print('Wrote $uuid');
+          } catch (e) {
             _showErrorDialog();
           }
         });
@@ -100,21 +93,25 @@ class _PairNfcScreenState extends State<PairNfcScreen> {
                   'NFC is not supported on this device, which means you can\'t scan stickers. No worries, you can still play! Contact a game moderator for help.'),
             );
           }
-          return const Center(
+          return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Icon(
+                const Icon(
                   Icons.nfc,
                   size: 100.0,
                   color: Colors.blue,
                 ),
-                SizedBox(height: 20.0),
-                Text(
+                const SizedBox(height: 20.0),
+                const Text(
                   'Bring your phone near your own NFC "target" sticker to pair it you.',
                   style: TextStyle(fontSize: 18.0),
                   textAlign: TextAlign.center,
                 ),
+                Text(
+                  lastUuid,
+                  style: const TextStyle(fontSize: 18.0),
+                )
               ],
             ),
           );
