@@ -18,12 +18,22 @@ if (tagMatch) {
     if (!player) return;
     unsubscribe();
 
+    const previousTarget = player.target;
+
     if (player.state === 'pending_registration') {
       await setNfcTag(uuid);
       nfcOperation.set(null);
     } else if (player.state === 'active') {
       const result = await eliminateTarget(uuid);
-      nfcOperation.set(result);
+
+      if (!result) {
+        return nfcOperation.set(null);
+      }
+
+      nfcOperation.set({
+        success: result.id === previousTarget,
+        result
+      });
     } else {
       nfcOperation.set(null);
     }

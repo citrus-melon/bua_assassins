@@ -12,13 +12,15 @@
     import IneligiblePage from "./pages/IneligiblePage.svelte";
     import UndefinedStatePage from "./pages/UndefinedStatePage.svelte";
     import RegistrationFlow from "./pages/RegistrationFlow.svelte";
+    import LoadingOverlay from "$lib/components/ui/LoadingOverlay.svelte";
 
 </script>
 
 <div class="p-4">
 {#if !$sessionStore || !$gameStore || !$playerStore || $gameStore.state === "unpublished"}
   <WelcomePage />
-<!-- {:else if $nfcOperation.} -->
+{:else if $nfcOperation === 'pending'}
+  <LoadingOverlay />
 {:else}
   <Nav />
   {#if $playerStore.state === "eliminated"}
@@ -33,6 +35,8 @@
     <PausedPage />
   {:else if $gameStore.state === "registration"}
     <RegisteredPage />
+  {:else if $nfcOperation}
+    <EliminationResultPage />
   {:else if $gameStore.state === "active"}
     <InGamePage />
   {:else}

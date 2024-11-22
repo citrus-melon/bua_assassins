@@ -111,4 +111,7 @@ export async function refreshGame() {
 
 export const showTutorialStore = writable<boolean>(false);
 
-export const nfcOperation = writable<null | 'pending' | Awaited<ReturnType<typeof eliminateTarget>>>(null);
+export const nfcOperation = writable<null | 'pending' | { success: boolean, result:
+    Awaited<ReturnType<typeof eliminateTarget>>}>(null);
+
+export const previousTargetStore = writable<string | null>();
