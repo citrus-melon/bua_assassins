@@ -1,7 +1,7 @@
 import { mount } from 'svelte'
 import './app.css'
 import App from './App.svelte'
-import { eliminateTarget, nfcOperation, playerStore, refreshGame, refreshPlayer, refreshTarget, sessionStore, setNfcTag } from './state'
+import { eliminateTarget, nfcOperation, playerStore, refreshGame, refreshPlayer, refreshTarget, sessionStore, setNfcTag, setPlayerState } from './state'
 
 // window.addEventListener('popstate', () => {
   
@@ -22,6 +22,7 @@ if (tagMatch) {
 
     if (player.state === 'pending_registration') {
       await setNfcTag(uuid);
+      await setPlayerState('active');
       nfcOperation.set(null);
     } else if (player.state === 'active') {
       const result = await eliminateTarget(uuid);
