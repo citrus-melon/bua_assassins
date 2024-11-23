@@ -55,7 +55,7 @@
     <UndefinedStatePage />
   {/if}
   {/if}
-  <p>User id: {$playerStore?.id}</p>
+  <p>User id: {$sessionStore?.user.id}</p>
 </div>
 
 <!-- {#key $currentPage}
