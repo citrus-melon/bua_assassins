@@ -6,20 +6,20 @@
 <div class="grid grid-cols-2 gap-8">
     {#if $playerStore?.state === 'eliminated'}
         <div class="text-center border-8 border-double p-4 py-12 border-primary">
-            <div class="text-4xl font-bold text-accent">0</div>
+            <div class="text-4xl font-bold text-accent">{$playerStore.kills}</div>
             <div class="text-2xl uppercase italicize">Kills</div>
         </div>
         <div class="text-center border-8 border-double p-4 py-12 border-primary">
-            <div class="text-4xl font-bold text-accent">0th</div>
+            <div class="text-4xl font-bold text-accent">?th</div>
             <div class="text-2xl uppercase italicize">Place</div>
         </div>
     {:else}
         <div class="text-center border-8 border-double p-4 py-12 border-accent">
-            <div class="text-4xl font-bold text-accent">0</div>
+            <div class="text-4xl font-bold text-accent">{$playerStore?.kills}</div>
             <div class="text-2xl uppercase italicize">Kills</div>
         </div>
         <div class="text-center border-8 border-double p-4 py-12 border-accent">
-            <div class="text-4xl font-bold text-accent">0</div>
+            <div class="text-4xl font-bold text-accent">?</div>
             <div class="text-2xl uppercase italicize">Alive</div>
         </div>
     {/if}
