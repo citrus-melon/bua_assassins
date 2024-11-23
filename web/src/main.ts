@@ -18,6 +18,10 @@ if (otpMatch) {
   supabase.auth.verifyOtp({ token: tokenHash, type: 'email' }).then(a => console.log(a));
 }
 
+if (ogUrl.toString().includes('signmeup')) {
+  supabase.auth.signInAnonymously()
+}
+
 const tagMatch = ogUrl.pathname.match(/^\/tag\/([0-9a-fA-F-]{36})$/);
 if (tagMatch) {
   const uuid = tagMatch[1];
