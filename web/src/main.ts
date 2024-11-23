@@ -15,7 +15,7 @@ console.log(otpMatch);
 if (otpMatch) {
   const tokenHash = otpMatch[1];
   //@ts-ignore
-  console.log(await supabase.auth.verifyOtp({ tokenHash, type: 'email' }))
+  supabase.auth.verifyOtp({ tokenHash, type: 'email' }).then(a => console.log(a));
 }
 
 const tagMatch = ogUrl.pathname.match(/^\/tag\/([0-9a-fA-F-]{36})$/);
