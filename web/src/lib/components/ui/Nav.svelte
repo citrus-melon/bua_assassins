@@ -1,12 +1,14 @@
 <script lang="ts">
     import Button from "./button/button.svelte";
     import buaLogo from "$lib/assets/bua-transparent.png";
-    import { refreshGame, refreshPlayer, setPlayerState, supabase } from "../../../state";
+    import { playerStore, refreshGame, refreshPlayer, setPlayerState, supabase } from "../../../state";
 
     const logout = async () => {
         if (window.confirm("Are you sure you want to log out? This is the equivalent of quitting the game and you will not be able to rejoin.")) {
             await setPlayerState('eliminated');
-            supabase.auth.signOut();
+            if ($playerStore?.state !== "active") {
+                supabase.auth.signOut();
+            }
         }
     }
 </script>
