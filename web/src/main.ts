@@ -9,7 +9,7 @@ import { eliminateTarget, nfcOperation, playerStore, refreshGame, refreshPlayer,
 
 const ogUrl = new URL(window.location.href);
 
-const otpMatch = ogUrl.hash.match(/^#access_token=(.+)&expire(.*)$/);
+const otpMatch = ogUrl.hash.match(/^#access_token=(.+)&expires_at.*$/);
 console.log(ogUrl.hash);
 console.log(otpMatch);
 if (otpMatch) {
