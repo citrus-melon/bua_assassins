@@ -9,12 +9,11 @@ import { eliminateTarget, nfcOperation, playerStore, refreshGame, refreshPlayer,
 
 const ogUrl = new URL(window.location.href);
 
-const otpMatch = ogUrl.pathname.match(/^\/auth\/confirm\?token_hash=(.+)&type=(.+)$/);
+const otpMatch = ogUrl.hash.match(/^access_token=(.+)&(.*)$/);
 if (otpMatch) {
   const tokenHash = otpMatch[1];
-  const type = otpMatch[2];
   //@ts-ignore
-  await supabase.auth.verifyOtp({ tokenHash, type })
+  await supabase.auth.verifyOtp({ tokenHash, type: 'email' })
 }
 
 const tagMatch = ogUrl.pathname.match(/^\/tag\/([0-9a-fA-F-]{36})$/);
