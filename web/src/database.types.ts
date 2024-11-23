@@ -43,6 +43,7 @@ export type Database = {
           name: string
           starts_at: string | null
           state: Database["public"]["Enums"]["game_state"]
+          witness_period: boolean
         }
         Insert: {
           created_at?: string
@@ -51,6 +52,7 @@ export type Database = {
           name: string
           starts_at?: string | null
           state: Database["public"]["Enums"]["game_state"]
+          witness_period?: boolean
         }
         Update: {
           created_at?: string
@@ -59,6 +61,7 @@ export type Database = {
           name?: string
           starts_at?: string | null
           state?: Database["public"]["Enums"]["game_state"]
+          witness_period?: boolean
         }
         Relationships: []
       }
@@ -170,6 +173,7 @@ export type Database = {
         | "active"
         | "eliminated"
         | "ineligible"
+        | "half_eliminated"
     }
     CompositeTypes: {
       [_ in never]: never
