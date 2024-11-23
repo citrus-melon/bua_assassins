@@ -23,7 +23,8 @@
 <div class="p-4">
 <div class="p-2 bg-input rounded-md">Announcement: Maxwell will be in the lobby for questions and tech support from now until 9 pm!</div>
 {#if !$sessionStore || !$gameStore || !$playerStore || $gameStore.state === "unpublished"}
-  <WelcomePage />
+  <!-- <WelcomePage /> -->
+   <IneligiblePage />
 {:else if $nfcOperation === 'pending'}
   <LoadingOverlay />
 {:else}
