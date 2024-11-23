@@ -16,6 +16,7 @@
     import LoadingOverlay from "$lib/components/ui/LoadingOverlay.svelte";
     import EliminationResultPage from "./pages/EliminationResultPage.svelte";
     import ViewTargetPage from "./pages/ViewTargetPage.svelte";
+    import HalfDeadPage from "./pages/HalfDeadPage.svelte";
 
 </script>
 
@@ -31,6 +32,8 @@
     <HowToPlayPage />
   {:else if $isTargetShown}
     <ViewTargetPage />
+  {:else if $playerStore.state === "half_eliminated"}
+    <HalfDeadPage />
   {:else if $playerStore.state === "eliminated"}
     <EliminatedPage />
   {:else if $gameStore.state === "completed"}
