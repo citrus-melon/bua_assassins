@@ -21,7 +21,7 @@
 </script>
 
 <div class="p-4">
-<div class="p-2 bg-input rounded-md">Announcement: Maxwell is in the room across from the chem lab if you have questions!</div>
+<div class="p-2 bg-primary text-primary-foreground rounded-md">NEW RULE: YOU MUST BE IN HALLWAYS. IF YOU ARE IN A ROOM BY 4:45, YOU WILL BE ELIMINATED</div>
 {#if !$sessionStore || !$gameStore || !$playerStore || $gameStore.state === "unpublished"}
   <!-- <WelcomePage /> -->
    <IneligiblePage />
