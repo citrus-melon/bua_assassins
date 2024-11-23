@@ -1,13 +1,21 @@
 import { mount } from 'svelte'
 import './app.css'
 import App from './App.svelte'
-import { eliminateTarget, nfcOperation, playerStore, refreshGame, refreshPlayer, refreshTarget, sessionStore, setNfcTag, setPlayerState } from './state'
+import { eliminateTarget, nfcOperation, playerStore, refreshGame, refreshPlayer, refreshTarget, sessionStore, setNfcTag, setPlayerState, supabase } from './state'
 
 // window.addEventListener('popstate', () => {
   
 // });
 
 const ogUrl = new URL(window.location.href);
+
+const otpMatch = ogUrl.pathname.match(/^\/auth\/confirm\?token_hash=(.+)&type=(.+)$/);
+if (otpMatch) {
+  const tokenHash = otpMatch[1];
+  const type = otpMatch[2];
+  //@ts-ignore
+  await supabase.auth.verifyOtp({ tokenHash, type })
+}
 
 const tagMatch = ogUrl.pathname.match(/^\/tag\/([0-9a-fA-F-]{36})$/);
 if (tagMatch) {
