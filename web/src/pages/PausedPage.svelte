@@ -3,6 +3,6 @@
 </script>
 
 <div class="container w-fit mx-auto">
-    <h1 class="text-center text-5xl font-bold my-8">You Are In Limbo</h1>
-    <div class="text-2xl">Think this was a mistake? Message maxwelly@bu.edu</div>
+    <h1 class="text-center text-5xl font-bold my-8 text-primary">FINAL ROUND!!!</h1>
+    <div class="text-2xl">Please congregate in the GYM ASAP!!!!</div>
 </div>
