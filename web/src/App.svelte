@@ -53,6 +53,7 @@
   {:else}
     <UndefinedStatePage />
   {/if}
+  <p>User id: {$playerStore.id}</p>
 {/if}
 </div>
 
