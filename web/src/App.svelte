@@ -53,8 +53,8 @@
   {:else}
     <UndefinedStatePage />
   {/if}
-  <p>User id: {$playerStore.id}</p>
-{/if}
+  {/if}
+  <p>User id: {$playerStore?.id}</p>
 </div>
 
 <!-- {#key $currentPage}
