@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { gameStore, playerStore, setPlayerState } from "../state";
+     import { gameStore, playerStore, setPlayerState } from "../state";
 import NameInputPage from "./NameInputPage.svelte";
     import PairNfcPage from "./PairNfcPage.svelte";
     import PreregisteredPage from "./PreregisteredPage.svelte";
