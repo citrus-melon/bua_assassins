@@ -21,7 +21,7 @@
 </script>
 
 <div class="p-4">
-<div class="p-2 bg-input rounded-md">Announcement: Maxwell will be in the lobby for questions and tech support from now until 9 pm!</div>
+<div class="p-2 bg-input rounded-md">Announcement: Maxwell is in the room across from the chem lab if you have questions!</div>
 {#if !$sessionStore || !$gameStore || !$playerStore || $gameStore.state === "unpublished"}
   <!-- <WelcomePage /> -->
    <IneligiblePage />
