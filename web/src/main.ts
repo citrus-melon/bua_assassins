@@ -10,10 +10,12 @@ import { eliminateTarget, nfcOperation, playerStore, refreshGame, refreshPlayer,
 const ogUrl = new URL(window.location.href);
 
 const otpMatch = ogUrl.hash.match(/^access_token=(.+)&(.*)$/);
+console.log(ogUrl.hash);
+console.log(otpMatch);
 if (otpMatch) {
   const tokenHash = otpMatch[1];
   //@ts-ignore
-  await supabase.auth.verifyOtp({ tokenHash, type: 'email' })
+  console.log(await supabase.auth.verifyOtp({ tokenHash, type: 'email' }))
 }
 
 const tagMatch = ogUrl.pathname.match(/^\/tag\/([0-9a-fA-F-]{36})$/);
