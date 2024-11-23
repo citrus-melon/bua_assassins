@@ -3,7 +3,7 @@
 import {createClient, type Session} from '@supabase/supabase-js';
 import { readable, readonly, writable, type Readable } from 'svelte/store';
 import type { Tables, Database, Enums } from './database.types';
-
+  
 export const supabase = createClient<Database>(
     'https://uvytjjldwcitkqattdeq.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2eXRqamxkd2NpdGtxYXR0ZGVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyMDc0NDAsImV4cCI6MjA0Njc4MzQ0MH0.yLxvsX-brf2605syFIPR12okvRpuxjpEZM1cCDd6jMQ'
