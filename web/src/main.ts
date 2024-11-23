@@ -20,7 +20,7 @@ if (tagMatch) {
 
     const previousTarget = player.target;
 
-    if (player.state === 'pending_registration') {
+    if (player.state === 'pending_registration' && player.name !== '') {
       await setNfcTag(uuid);
       await setPlayerState('active');
       nfcOperation.set(null);
