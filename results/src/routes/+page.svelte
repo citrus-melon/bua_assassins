@@ -35,3 +35,18 @@
             </a>
         </div>
 </main>
+
+<style>
+    main::after { /* Decorative background shape */
+        content: "";
+        clip-path: polygon(0 0, 100% 10%, 80% 80%, 0 100%);
+        position: fixed;
+        top: 10vh;
+        left: 0;
+        width: 40%;
+        height: 60vh;
+        z-index: -1;
+        background: white;
+        opacity: 8%;
+    }
+</style>
