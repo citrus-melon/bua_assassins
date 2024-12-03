@@ -51,11 +51,11 @@
             <tbody>
                 {#each data.players.values() as player }
                 <tr>
-                    <td>{player.name}</td>
-                    <td>{player.color_team}</td>
-                    <td>{player.kills}</td>
-                    <td>{player.died_at}</td>
-                </tr>
+                        <td><a href='/player/{player.id}'>{player.name}</a></td>
+                        <td>{player.color_team}</td>
+                        <td>{player.kills}</td>
+                        <td>{player.died_at}</td>
+                    </tr>
                 {/each}
             </tbody>
         </table>
