@@ -1,5 +1,3 @@
-export const prerender = true;
-
 let players: Map<string, Player> | undefined;
 
 export const fetchPlayers = async () => {

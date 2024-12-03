@@ -1,4 +1,6 @@
 import { fetchPlayers } from "$lib/server/fetch-players";
+import { error } from "@sveltejs/kit";
+import type { PageServerLoad } from "./$types";
 import type { EntryGenerator } from "./$types";
 
 export const entries: EntryGenerator = async () => {
@@ -8,3 +10,14 @@ export const entries: EntryGenerator = async () => {
         id: player.id
     }))
 }
+
+export const load: PageServerLoad = async ({ params }) => {
+    const players = await fetchPlayers();
+    const player = players.get(params.id);
+
+    if (!player) {
+        error(404, "Player not found");
+    }
+
+    return { player }
+};
