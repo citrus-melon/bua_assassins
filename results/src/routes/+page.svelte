@@ -16,8 +16,10 @@
             </div>
             <div class="bg-purple-800 rounded-lg p-4">
                 <strong>2nd Place</strong>
-                <p class="text-3xl text-center overflow-auto">Nathan Capellan</p>
-                <ColorBadge color="black" />
+                <div class="text-center">
+                    <p class="text-3xl">Nathan Capellan</p>
+                    <ColorBadge color="black" />
+                </div>
             </div>
             <div>
                 <strong>Most Eliminations Made</strong>
