@@ -66,7 +66,7 @@
     main::after { /* Decorative background shape */
         content: "";
         clip-path: polygon(0 0, 100% 10%, 80% 80%, 0 100%);
-        position: fixed;
+        position: absolute;
         top: 10vh;
         left: 0;
         width: 40%;
