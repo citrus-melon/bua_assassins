@@ -1,7 +1,9 @@
 <script>
     import ColorBadge from "$lib/color-badge.svelte";
+    const { data } = $props();
 
 </script>
+
 <main class="container mx-auto p-4">
     <div class="grid grid-cols-1 md:grid-cols-2 min-h-[75vh] place-items-center">
         <h1 class="text-center md:text-start my-4">
@@ -31,11 +33,33 @@
             <p class="col-span-2 text-center mt-4 text-pink">Thank you everyone for playing!</p>
         </div>
     </div>
-        <div class="mx-auto w-fit mt-4">
-            <a class="bg-purple-800 rounded-lg p-2 underline decoration-pink hover:bg-pink hover:text-purple-800" href="https://docs.google.com/spreadsheets/d/1qVH7eN5vljXPw7NaNXZ9Gdd2V4X18npyOsYE1p-vPmk/edit?usp=sharing">
-                See the full results spreadsheet here!
-            </a>
-        </div>
+    <div class="mx-auto w-fit mt-4">
+        <a class="bg-purple-800 rounded-lg p-2 underline decoration-pink hover:bg-pink hover:text-purple-800" href="https://docs.google.com/spreadsheets/d/1qVH7eN5vljXPw7NaNXZ9Gdd2V4X18npyOsYE1p-vPmk/edit?usp=sharing">
+            See the full results spreadsheet here!
+        </a>
+    </div>
+    <div class="mt-8">
+        <table>
+            <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Color Team</th>
+                    <th>Eliminations</th>
+                    <th>Died At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {#each data.players.values() as player }
+                <tr>
+                    <td>{player.name}</td>
+                    <td>{player.color_team}</td>
+                    <td>{player.kills}</td>
+                    <td>{player.died_at}</td>
+                </tr>
+                {/each}
+            </tbody>
+        </table>
+    </div>
 </main>
 
 <style>

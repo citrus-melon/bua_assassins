@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { updated } from '$app/stores';
 	import '../app.css';
 	let { children } = $props();
 
+    import { updated } from '$app/stores';
 	$effect(() => {
 		if ($updated) {
 			location.reload();
