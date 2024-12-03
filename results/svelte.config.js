@@ -13,7 +13,7 @@ const config = {
 		// See https://svelte.dev/docs/kit/adapters for more information about adapters.
 		adapter: adapter(),
 		version: {
-			pollInterval: 10 * 1000
+			pollInterval: 5 * 60 * 1000
 		}
 	}
 };
