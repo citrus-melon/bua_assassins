@@ -1,5 +1,6 @@
 import typography from '@tailwindcss/typography';
 import type { Config } from 'tailwindcss';
+import colors from 'tailwindcss/colors'
 
 export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
@@ -16,6 +17,13 @@ export default {
         800: '#4c215e',
       },
       'pink': '#edd4ff',
+
+      'true-red': colors.red,
+      'true-orange': colors.orange,
+      'true-yellow': colors.yellow,
+      'true-green': colors.green,
+      'true-blue': colors.blue,
+      'true-purple': colors.purple,
     },
     extend: {}
   },
