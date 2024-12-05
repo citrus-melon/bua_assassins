@@ -46,15 +46,17 @@
                     <th>Color Team</th>
                     <th>Eliminations</th>
                     <th>Died At</th>
+                    <th>Place</th>
                 </tr>
             </thead>
             <tbody>
-                {#each data.players.values() as player }
+                {#each Array.from(data.players.values()).sort((a, b) => (a.rank ?? Infinity) - (b.rank ?? Infinity)) as player }
                 <tr>
                         <td><a href='/player/{player.id}'>{player.name}</a></td>
                         <td>{player.color_team}</td>
                         <td>{player.kills}</td>
                         <td>{player.died_at}</td>
+                        <td>{player.rank}</td>
                     </tr>
                 {/each}
             </tbody>

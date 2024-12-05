@@ -18,4 +18,6 @@ interface Player {
     revived: boolean;
     name_ambiguous: boolean;
     name_assumption: boolean;
+
+    rank?: number;
 }

@@ -27,5 +27,19 @@ export const fetchPlayers = async () => {
         });
     }
 
+    let i_rank = 0;
+
+    for (const player of Array.from(players.values()).sort((a, b) => // sort by duel_rank, then died_at
+        (a.duel_rank ?? Infinity) - (b.duel_rank ?? Infinity)
+            || (b.died_at?.getTime() ?? 0) - (a.died_at?.getTime() ?? 0)
+    )) {
+        if (player.duel_rank) {
+            player.rank = player.duel_rank;
+            if (player.rank > i_rank) i_rank = player.rank;
+        } else if (player.died_at) {
+            player.rank = ++i_rank;
+        }
+    }
+
     return players;
 }
