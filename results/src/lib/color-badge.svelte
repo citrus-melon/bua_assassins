@@ -1,24 +1,33 @@
 <script lang="ts">
-    let { color }: {color: String} = $props();
-    color = color.toLowerCase();
-    const colorTitleCase = color.charAt(0).toUpperCase() + color.slice(1);
-    let classes: string | undefined;
-    switch (color) {
-        case "black":
-            classes = "text-neutral text-opacity-60";
-            break;
-        case "white":
-            classes = "text-white";
-            break;
-        case "blue":
-            classes = "text-true-blue-500";
-            break;
+    const colorToClasses = (color: string): string | undefined => {
+        switch (color) {
+            case "red":
+                return "text-true-red-500";
+            case "orange":
+                return "text-true-orange-500";
+            case "yellow":
+                return "text-true-yellow-500";
+            case "green":
+                return "text-true-green-500";
+            case "blue":
+                return "text-true-blue-500";
+            case "purple":
+                return "text-true-purple-500";
+            case "black":
+                return "text-neutral text-opacity-60";
+            case "white":
+                return "text-white";
+        }
     }
+
+    let { color }: {color: String} = $props();
+    const colorLowerCase = $derived(color.toLowerCase());
+    const colorTitleCase = $derived(color.charAt(0).toUpperCase() + color.slice(1));
+    const classes = $derived(colorToClasses(colorLowerCase));
 </script>
 
 {#if classes}
 <div class="text-base inline-block px-2 rounded-full bg-purple-950 whitespace-nowrap overflow-hidden {classes} align-middle">
-
     ★ {colorTitleCase} Team
 </div>
 {/if}
