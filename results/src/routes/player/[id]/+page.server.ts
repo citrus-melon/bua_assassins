@@ -21,7 +21,9 @@ export const load: PageServerLoad = async ({ params }) => {
 
     const killsRank = Array.from(players.values()).sort((a, b) => b.kills - a.kills).findIndex(p => p.id === player.id) + 1;
 
+    const kills = Array.from(players.values().filter(p => p.died_by === player.id));
+
     const died_by_player = player.died_by ? players.get(player.died_by) : undefined;
 
-    return { player, died_by_player, killsRank }
+    return { player, died_by_player, killsRank, kills }
 };

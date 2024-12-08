@@ -5,7 +5,7 @@ export const fetchPlayers = async () => {
 
     const gSheetResponse = await fetch(`https://docs.google.com/spreadsheets/d/e/2PACX-1vTF39Uxa7gcMU5wzdw-usG6C6U2TFxXeA8-unq4EsepKxjTT6OE1fk0pa2Fh4L9BrKobB2McRA1c2oH/pub?gid=2046696029&single=true&output=tsv`);
     const sheetTSV = await gSheetResponse.text();
-    const sheet = sheetTSV.split('\n').map(row => row.split('\t'));
+    const sheet = sheetTSV.split('\r\n').map(row => row.split('\t'));
 
     players = new Map<string, Player>();
 

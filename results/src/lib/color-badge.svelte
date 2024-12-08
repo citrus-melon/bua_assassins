@@ -20,14 +20,14 @@
         }
     }
 
-    let { color }: {color: String} = $props();
+    let { color = '' }: {color: String | undefined } = $props();
     const colorLowerCase = $derived(color.toLowerCase());
     const colorTitleCase = $derived(color.charAt(0).toUpperCase() + color.slice(1));
     const classes = $derived(colorToClasses(colorLowerCase));
 </script>
 
 {#if classes}
-<div class="text-base inline-block px-2 rounded-full bg-purple-950 whitespace-nowrap overflow-hidden {classes} align-middle">
+<span class="text-base inline-block px-2 rounded-full bg-purple-950 whitespace-nowrap overflow-hidden {classes} align-middle">
     ★ {colorTitleCase} Team
-</div>
+</span>
 {/if}

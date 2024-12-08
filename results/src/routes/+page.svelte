@@ -51,11 +51,17 @@
             </thead>
             <tbody>
                 {#each Array.from(data.players.values()).sort((a, b) => (a.rank ?? Infinity) - (b.rank ?? Infinity)) as player }
-                <tr>
-                        <td><a href='/player/{player.id}'>{player.name}</a></td>
-                        <td>{player.color_team}</td>
+                <tr class="link-whole-tr">
+                        <td><a href='/player/{player.id}'>
+                            {#if player.name}
+                                {player.name}
+                            {:else}
+                                <i class="opacity-60">Name Uncertain</i>
+                            {/if}
+                        </a></td>
+                        <td><ColorBadge color={player.color_team} /></td>
                         <td>{player.kills}</td>
-                        <td>{player.died_at}</td>
+                        <td>{player.died_at?.toLocaleTimeString()}</td>
                         <td>{player.rank}</td>
                     </tr>
                 {/each}
@@ -76,5 +82,18 @@
         z-index: -1;
         background: white;
         opacity: 8%;
+    }
+
+    .link-whole-tr {
+        position: relative;
+    }
+    
+    .link-whole-tr a::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
     }
 </style>
