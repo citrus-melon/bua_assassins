@@ -1,11 +1,12 @@
 <script>
     import ColorBadge from "$lib/color-badge.svelte";
+    import SearchBar from "$lib/search-bar.svelte";
     const { data } = $props();
 
 </script>
 
 <main class="container mx-auto p-4">
-    <div class="grid grid-cols-1 md:grid-cols-2 min-h-[75vh] place-items-center">
+    <section class="grid grid-cols-1 md:grid-cols-2 min-h-[75vh] place-items-center">
         <h1 class="text-center md:text-start my-4">
             <span class="block text-pink text-2xl font-bold">BUA Assassins 2024</span>
             <span class="block text-red text-8xl font-bold">Results</span>
@@ -30,44 +31,58 @@
                     <li class="flex justify-between text-xl overflow-auto"><span>Sam Friedman<ColorBadge color="black" /></span><span class="opacity-60 whitespace-nowrap">9 elims</span></li>
                 </ul>
             </div>
+            <div class="col-span-2 justify-self-center w-3/4">
+                <SearchBar players={Array.from(data.players.values())} />
+            </div>
             <p class="col-span-2 text-center mt-4 text-pink">Thank you everyone for playing!</p>
         </div>
-    </div>
-    <div class="mx-auto w-fit mt-4">
-        <a class="bg-purple-800 rounded-lg p-2 underline decoration-pink hover:bg-pink hover:text-purple-800" href="https://docs.google.com/spreadsheets/d/1qVH7eN5vljXPw7NaNXZ9Gdd2V4X18npyOsYE1p-vPmk/edit?usp=sharing">
-            See the full results spreadsheet here!
-        </a>
-    </div>
-    <div class="mt-8">
-        <table>
-            <thead>
-                <tr>
-                    <th>Player</th>
-                    <th>Color Team</th>
-                    <th>Eliminations</th>
-                    <th>Died At</th>
-                    <th>Place</th>
-                </tr>
-            </thead>
-            <tbody>
-                {#each Array.from(data.players.values()).sort((a, b) => (a.rank ?? Infinity) - (b.rank ?? Infinity)) as player }
-                <tr class="link-whole-tr">
-                        <td><a href='/player/{player.id}'>
-                            {#if player.name}
-                                {player.name}
-                            {:else}
-                                <i class="opacity-60">Name Uncertain</i>
-                            {/if}
-                        </a></td>
-                        <td><ColorBadge color={player.color_team} /></td>
-                        <td>{player.kills}</td>
-                        <td>{player.died_at?.toLocaleTimeString()}</td>
-                        <td>{player.rank}</td>
+    </section>
+    <section class="mt-8 grid grid-cols-1 md:grid-cols-2 justify-items-center">
+        <div class="text-center my-4">
+            <h2 class="text-4xl font-bold text-pink">Full Results</h2>
+            <p class="text-lg">Click on any player for more detailed info!</p>
+        </div>
+        <div class="h-screen overflow-auto w-fit rounded-lg border-purple-800 border border-opacity-30 max-w-full">
+            <table>
+            <thead class="text-left text-red sticky top-0 bg-purple-950 z-10">
+                    <tr>
+                        <th class="p-2">Place</th>
+                        <th class="p-2">Player</th>
+                        <th class="p-2">STAR Team</th>
+                        <th class="p-2">Elims</th>
+                        <th class="p-2">Died At</th>
                     </tr>
-                {/each}
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                    {#each Array.from(data.players.values()).sort((a, b) => (a.rank ?? Infinity) - (b.rank ?? Infinity)) as player }
+                    <tr class="link-whole-tr odd:bg-purple-800 odd:bg-opacity-30">
+                            <td class="p-2 text-right">{player.rank}</td>
+                            <td class="p-2"><a href='/player/{player.id}'>
+                                {#if player.name}
+                                    {player.name}
+                                {:else}
+                                    <i class="opacity-60">Name Uncertain</i>
+                                {/if}
+                            </a></td>
+                            <td class="p-2"><ColorBadge color={player.color_team} /></td>
+                            <td class="p-2">{player.kills}</td>
+                            <td class="p-2">{player.died_at?.toLocaleTimeString()}</td>
+                        </tr>
+                    {/each}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <section class="mx-auto w-fit my-16">
+        <a class="bg-purple-800 rounded-lg p-2 underline decoration-pink hover:bg-pink hover:text-purple-800" href="https://docs.google.com/spreadsheets/d/1qVH7eN5vljXPw7NaNXZ9Gdd2V4X18npyOsYE1p-vPmk/edit?usp=sharing">
+            Like data? Get the raw spreadsheet here!
+        </a>
+    </section>
+
+    <footer class="opacity-60 my-16 text-center">
+        <p>Something look wrong? Contact me!</p>
+        <p class="mt-4">Let me know if you're interested in joining a team to help improve this project!</p>
+    </footer>
 </main>
 
 <style>
