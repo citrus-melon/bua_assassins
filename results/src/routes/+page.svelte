@@ -3,6 +3,7 @@
     import { colorTeams } from "$lib/charts/chart-config";
     import ColorBadge from "$lib/color-badge.svelte";
     import SearchBar from "$lib/search-bar.svelte";
+    import IconLink from "~icons/tabler/external-link"
     const { data } = $props();
 
     const playersArray = Array.from(data.players.values());
@@ -57,6 +58,16 @@
                     <li class="flex justify-between text-xl overflow-auto"><a href="/player/65139b4d-7685-4d27-b6b6-37a5499fc1b9" class="hover:text-pink hover:underline">Sam Friedman<ColorBadge color="black" /></a><span class="opacity-60 whitespace-nowrap">9 elims</span></li>
                 </ul>
             </div>
+            {#if data.user}
+            <a class="col-span-2 bg-pink bg-opacity-90 text-purple-950 rounded-lg p-4 group text-lg flex justify-between flex-wrap" href="/player/{data.user.id}">
+                <span>
+                    <strong>Your Results</strong>
+                    <IconLink class="inline align-middle relative bottom-0.5"/>
+                </span>
+                <span class="group-hover:text-red group-hover:underline align-middle">{data.user.name} <ColorBadge color={data.user?.color_team} /></span>
+                <strong><span class="text-red">#</span>{data.user.rank}</strong>
+            </a>
+            {/if}
             <div class="col-span-2 justify-self-center w-3/4">
                 <SearchBar players={playersArray} />
             </div>
