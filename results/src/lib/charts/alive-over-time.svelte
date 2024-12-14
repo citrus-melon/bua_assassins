@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
+    import { onDestroy, onMount } from 'svelte';
     import { Chart } from 'chart.js/auto';
     import { colors } from './chart-config';
     import { goto } from '$app/navigation';
@@ -7,6 +7,8 @@
     const { players }: { players: Player[] } = $props();
 
     let canvas: HTMLCanvasElement;
+
+    let chart: Chart | undefined = $state();
 
     onMount(() => {
         const ctx = canvas.getContext('2d');
@@ -58,6 +60,10 @@
                 }
             },
         });
+    });
+
+    onDestroy(() => {
+        chart?.destroy();
     });
 
 </script>
