@@ -7,9 +7,9 @@
 
 <main class="container mx-auto p-4">
     <div class="my-8">
-        <nav>
-            <a href="/" class="opacity-60 text-lg">
-                <IconBack class="inline align-middle relative bottom-0.5" />Home
+        <nav class="my-4">
+            <a href="/" class="text-red">
+                <IconBack class="inline align-middle relative bottom-0.5" />BUA Assassins 2024 Results
             </a>
         </nav>
         <h1 class="text-6xl text-pink font-semibold">
