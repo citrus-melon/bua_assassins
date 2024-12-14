@@ -131,43 +131,41 @@
                 </label>
             </div>
         </div>
-        <div class="max-w-fit">
-            <div class="h-screen overflow-auto w-fit rounded-lg border-purple-800 border border-opacity-30 max-w-full">
-                <table>
-                <thead class="text-left text-red sticky top-0 bg-purple-950 z-10">
-                        <tr>
-                            <th class="p-2">Place</th>
-                            <th class="p-2">Player</th>
-                            <th class="p-2">STAR Team</th>
-                            <th class="p-2">Elims</th>
-                            <th class="p-2">Died At</th>
+        <div class="h-screen overflow-auto rounded-lg border-purple-800 border border-opacity-30 max-w-full w-fit">
+            <table>
+            <thead class="text-left text-red sticky top-0 bg-purple-950 z-10">
+                    <tr>
+                        <th class="p-2">Place</th>
+                        <th class="p-2">Player</th>
+                        <th class="p-2">STAR Team</th>
+                        <th class="p-2">Elims</th>
+                        <th class="p-2">Died At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {#each sortedPlayers as player}
+                    <tr class="link-whole-tr odd:bg-purple-800 odd:bg-opacity-30">
+                            <td class="p-2 text-right">{player.rank}</td>
+                            <td class="p-2"><a href='/player/{player.id}' class="hover:underline hover:text-pink">
+                                {#if player.name}
+                                    {player.name}
+                                {:else}
+                                    <i class="opacity-60">Name Uncertain</i>
+                                {/if}
+                            </a></td>
+                            <td class="p-2"><ColorBadge color={player.color_team} /></td>
+                            <td class="p-2">{player.kills}</td>
+                            <td class="p-2">
+                                {#if player.died_by === "Duel"}
+                                    Final Duel
+                                {:else}
+                                    {player.died_at?.toLocaleTimeString()}
+                                {/if}
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {#each sortedPlayers as player}
-                        <tr class="link-whole-tr odd:bg-purple-800 odd:bg-opacity-30">
-                                <td class="p-2 text-right">{player.rank}</td>
-                                <td class="p-2"><a href='/player/{player.id}' class="hover:underline hover:text-pink">
-                                    {#if player.name}
-                                        {player.name}
-                                    {:else}
-                                        <i class="opacity-60">Name Uncertain</i>
-                                    {/if}
-                                </a></td>
-                                <td class="p-2"><ColorBadge color={player.color_team} /></td>
-                                <td class="p-2">{player.kills}</td>
-                                <td class="p-2">
-                                    {#if player.died_by === "Duel"}
-                                        Final Duel
-                                    {:else}
-                                        {player.died_at?.toLocaleTimeString()}
-                                    {/if}
-                                </td>
-                            </tr>
-                        {/each}
-                    </tbody>
-                </table>
-            </div>
+                    {/each}
+                </tbody>
+            </table>
         </div>
     </section>
     <footer class="opacity-60 my-16 text-center">
