@@ -126,7 +126,7 @@
     {:else if data.died_by_player}
     <section class="my-8">
         <strong class="text-red">Eliminated By</strong>
-        <a href="/player/{data.died_by_player.id}">
+        <a href="/player/{data.died_by_player.id}" class="hover:underline hover:text-pink">
             <p class="text-xl">{data.died_by_player.name} <ColorBadge color={data.died_by_player?.color_team}/></p>
         </a>
     </section>
@@ -138,7 +138,7 @@
         <ul>
             {#each data.kills as player}
                 <li>
-                    <a href="/player/{player.id}">
+                    <a href="/player/{player.id}" class="hover:underline hover:text-pink">
                         <span class="text-xl">
                             {#if player.name}
                                 {player.name}
@@ -147,8 +147,8 @@
                             {/if}
                         </span>
                         <ColorBadge color={player.color_team}/>
-                        <span class="align-middle opacity-60">at <time datetime={player.died_at?.toISOString()}>{player.died_at?.toLocaleTimeString()}</time></span>
                     </a>
+                    <span class="align-middle opacity-60">at <time datetime={player.died_at?.toISOString()}>{player.died_at?.toLocaleTimeString()}</time></span>
                 </li>
             {/each}
         </ul>

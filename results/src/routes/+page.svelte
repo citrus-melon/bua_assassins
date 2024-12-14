@@ -20,23 +20,23 @@
             <span class="block text-red text-8xl font-bold">Results</span>
         </h1>
         <div class="grid grid-cols-2 gap-4">
-            <div class="bg-red rounded-lg text-purple-950 p-4 col-span-2 text-center">
+            <a class="bg-red rounded-lg text-purple-950 p-4 col-span-2 text-center" href="/player/df465bfb-ba27-45dd-869f-b8f3aacc7a61">
                 <strong class="text-xl">1st Place</strong>
                 <p class="text-5xl">Xander</p>
                 <ColorBadge color="black" />
-            </div>
-            <div class="bg-purple-800 rounded-lg p-4">
+            </a>
+            <a class="bg-purple-800 rounded-lg p-4" href="/player/5b78bd53-03d3-4cdf-a76c-5c35b9498865">
                 <strong>2nd Place</strong>
                 <div class="text-center">
                     <p class="text-3xl">Nathan Capellan</p>
                     <ColorBadge color="black" />
                 </div>
-            </div>
+            </a>
             <div>
                 <strong>Most Eliminations Made</strong>
                 <ul>
-                    <li class="flex justify-between text-xl overflow-auto"><span>Quinn<ColorBadge color="blue" /></span> <span class="opacity-60 whitespace-nowrap">9 elims</span></li>
-                    <li class="flex justify-between text-xl overflow-auto"><span>Sam Friedman<ColorBadge color="black" /></span><span class="opacity-60 whitespace-nowrap">9 elims</span></li>
+                    <li class="flex justify-between text-xl overflow-auto"><a href="/player/4cce97c3-234a-4059-86c6-fd65c0a5b410" class="hover:text-pink hover:underline">Quinn<ColorBadge color="blue" /></a> <span class="opacity-60 whitespace-nowrap">9 elims</span></li>
+                    <li class="flex justify-between text-xl overflow-auto"><a href="/player/65139b4d-7685-4d27-b6b6-37a5499fc1b9" class="hover:text-pink hover:underline">Sam Friedman<ColorBadge color="black" /></a><span class="opacity-60 whitespace-nowrap">9 elims</span></li>
                 </ul>
             </div>
             <div class="col-span-2 justify-self-center w-3/4">
@@ -79,7 +79,7 @@
         </div>
     </section>
     <section class="my-16 grid grid-cols-1 md:grid-cols-2 justify-items-center">
-        <div class="text-center my-8">
+        <div class="text-center my-8 md:my-16">
             <h2 class="text-4xl font-bold text-pink">Full Results</h2>
             <p class="text-lg">Click on any player for more detailed info!</p>
         </div>
@@ -98,7 +98,7 @@
                     {#each playersArray.sort((a, b) => (a.rank ?? Infinity) - (b.rank ?? Infinity)) as player }
                     <tr class="link-whole-tr odd:bg-purple-800 odd:bg-opacity-30">
                             <td class="p-2 text-right">{player.rank}</td>
-                            <td class="p-2"><a href='/player/{player.id}'>
+                            <td class="p-2"><a href='/player/{player.id}' class="hover:underline hover:text-pink">
                                 {#if player.name}
                                     {player.name}
                                 {:else}
