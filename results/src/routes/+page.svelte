@@ -107,7 +107,13 @@
                             </a></td>
                             <td class="p-2"><ColorBadge color={player.color_team} /></td>
                             <td class="p-2">{player.kills}</td>
-                            <td class="p-2">{player.died_at?.toLocaleTimeString()}</td>
+                            <td class="p-2">
+                                {#if player.died_by === "Duel"}
+                                    Final Duel
+                                {:else}
+                                    {player.died_at?.toLocaleTimeString()}
+                                {/if}
+                            </td>
                         </tr>
                     {/each}
                 </tbody>
