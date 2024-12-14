@@ -113,19 +113,19 @@
             <p class="text-lg mt-2">Click on any player for more detailed info!</p>
             <div class="flex flex-wrap gap-2 mt-8">
                 Sort by:
-                <label class="{sort === 'rank' ? 'bg-pink text-purple-950': ''} rounded-full bg-purple-800 px-2 cursor-pointer">
+                <label class="{sort === 'rank' ? 'bg-pink text-purple-950': 'bg-purple-800'} rounded-full px-2 cursor-pointer">
                     <input type="radio" name="sort" value="rank" bind:group={sort} checked class="sr-only">
                     Place
                 </label>
-                <label class="{sort === 'kills' ? 'bg-pink text-purple-950': ''} rounded-full bg-purple-800 px-2 cursor-pointer">
+                <label class="{sort === 'kills' ? 'bg-pink text-purple-950': 'bg-purple-800'} rounded-full px-2 cursor-pointer">
                     <input type="radio" name="sort" value="kills" bind:group={sort} class="sr-only">
                     Eliminations Made
                 </label>
-                <label class="{sort === 'name' ? 'bg-pink text-purple-950': ''} rounded-full bg-purple-800 px-2 cursor-pointer">
+                <label class="{sort === 'name' ? 'bg-pink text-purple-950': 'bg-purple-800'} rounded-full px-2 cursor-pointer">
                     <input type="radio" name="sort" value="name" bind:group={sort} class="sr-only">
                     Name
                 </label>
-                <label class="{sortColorTeam ? 'bg-pink text-purple-950': ''} rounded-full bg-purple-800 px-2 cursor-pointer">
+                <label class="{sortColorTeam ? 'bg-pink text-purple-950': 'bg-purple-800'} rounded-full px-2 cursor-pointer">
                     <input type="checkbox" bind:checked={sortColorTeam} class="sr-only">
                     STAR Team
                 </label>
