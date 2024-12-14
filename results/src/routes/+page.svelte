@@ -1,9 +1,16 @@
-<script>
+<script lang="ts">
     import AliveOverTime from "$lib/charts/alive-over-time.svelte";
     import ColorBadge from "$lib/color-badge.svelte";
     import SearchBar from "$lib/search-bar.svelte";
     const { data } = $props();
 
+    const playersArray = Array.from(data.players.values());
+
+    const averageDiedAt = () => {
+        const playersWithDiedAt = playersArray.filter(p => p.died_at);
+        const total = playersWithDiedAt.reduce((a, b) => a + b.died_at!.getTime(), 0);
+        return new Date(total / playersWithDiedAt.length);
+    }
 </script>
 
 <main class="container mx-auto p-4">
@@ -33,16 +40,46 @@
                 </ul>
             </div>
             <div class="col-span-2 justify-self-center w-3/4">
-                <SearchBar players={Array.from(data.players.values())} />
+                <SearchBar players={playersArray} />
             </div>
             <p class="col-span-2 text-center mt-4 text-pink">Thank you everyone for playing!</p>
         </div>
     </section>
-    <section class="mt-8">
-        <AliveOverTime players={Array.from(data.players.values())} />
+    <section class="my-16 grid grid-cols-1 md:grid-cols-2">
+        <div class="md:col-start-2 text-center">
+            <h2 class="text-4xl font-bold text-pink">Some Stats</h2>
+            <ul class="flex gap-x-[5%] gap-y-4 justify-center my-8 md:my-16 flex-wrap">
+                <li>
+                    <div class="text-4xl">{playersArray.filter(p => p.rank).length}</div>
+                    <strong>Players participated</strong>
+                </li>
+                <li>
+                    <strong>Average survival</strong>
+                    <div class="text-4xl">{averageDiedAt().toLocaleTimeString()}</div>
+                </li>
+                <li>
+                    <div class="text-4xl">408</div>
+                    <strong>Taps recorded</strong>
+                </li>
+            </ul>
+            <div class="flex gap-4 flex-wrap justify-center my-8">
+                <a href="/stats" class="bg-red rounded-lg p-2 hover:bg-pink text-purple-950">
+                    More Stats
+                </a>
+                <a class="bg-purple-800 rounded-lg p-2 hover:bg-pink hover:text-purple-800" href="https://docs.google.com/spreadsheets/d/1qVH7eN5vljXPw7NaNXZ9Gdd2V4X18npyOsYE1p-vPmk/edit?usp=sharing">
+                    Raw spreadsheet
+                </a>
+            </div>
+        </div>
+        <div class="md:row-start-1">
+            <figure>
+                <figcaption class="text-center font-bold">Players Surviving Over Time</figcaption>
+                <AliveOverTime players={playersArray} />
+            </figure>
+        </div>
     </section>
-    <section class="mt-8 grid grid-cols-1 md:grid-cols-2 justify-items-center">
-        <div class="text-center my-4">
+    <section class="my-16 grid grid-cols-1 md:grid-cols-2 justify-items-center">
+        <div class="text-center my-8">
             <h2 class="text-4xl font-bold text-pink">Full Results</h2>
             <p class="text-lg">Click on any player for more detailed info!</p>
         </div>
@@ -58,7 +95,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {#each Array.from(data.players.values()).sort((a, b) => (a.rank ?? Infinity) - (b.rank ?? Infinity)) as player }
+                    {#each playersArray.sort((a, b) => (a.rank ?? Infinity) - (b.rank ?? Infinity)) as player }
                     <tr class="link-whole-tr odd:bg-purple-800 odd:bg-opacity-30">
                             <td class="p-2 text-right">{player.rank}</td>
                             <td class="p-2"><a href='/player/{player.id}'>
@@ -77,12 +114,6 @@
             </table>
         </div>
     </section>
-    <section class="mx-auto w-fit my-16">
-        <a class="bg-purple-800 rounded-lg p-2 underline decoration-pink hover:bg-pink hover:text-purple-800" href="https://docs.google.com/spreadsheets/d/1qVH7eN5vljXPw7NaNXZ9Gdd2V4X18npyOsYE1p-vPmk/edit?usp=sharing">
-            Like data? Get the raw spreadsheet here!
-        </a>
-    </section>
-
     <footer class="opacity-60 my-16 text-center">
         <p>Something look wrong? Contact me!</p>
         <p class="mt-4">Let me know if you're interested in joining a team to help improve this project!</p>

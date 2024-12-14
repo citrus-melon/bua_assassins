@@ -61,6 +61,6 @@
 
 </script>
 
-<div class="relative">
+<div class="relative" style="aspect-ratio: 2;">
     <canvas bind:this={canvas}></canvas>
 </div>
