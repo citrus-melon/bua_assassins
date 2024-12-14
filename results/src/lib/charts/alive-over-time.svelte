@@ -33,6 +33,7 @@
                     cubicInterpolationMode: 'monotone',
                     borderColor: colors.red,
                     backgroundColor: `${colors.purple[800]}44`,
+                    pointHoverBorderColor: colors.pink,
                 }]
             },
             options: {
