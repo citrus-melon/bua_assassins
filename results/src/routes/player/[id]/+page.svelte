@@ -22,25 +22,37 @@
         <ColorBadge color={data.player.color_team} />
     </div>
 
+    {#if data.player.rank}
     <div class="my-8 grid grid-cols-2 max-w-lg">
-        <div class="bg-purple-800 p-4 text-center rounded-lg">
-            <div class="text-4xl">
-                <span class="text-red">#</span>{data.player.rank}
+        {#if data.player.rank === 1}
+            <div class="bg-red text-purple-950 p-4 text-center rounded-lg">
+                <div class="text-5xl">
+                    #{data.player.rank}
+                </div>
+                <p class="mt-2">
+                    <strong>Winner!</strong>
+                </p>
             </div>
-            {#if data.player.died_by === "Duel"}
-            <p class="mt-2">
-                <strong>Surivived until final duel</strong>
-            </p>
-            {:else if data.player.died_at}
-            <p class="mt-2">
-                Surivived until <strong
-                    ><time datetime={data.player.died_at.toISOString()}
-                        >{data.player.died_at.toLocaleTimeString()}</time
-                    ></strong
-                >
-            </p>
-            {/if}
-        </div>
+        {:else}
+            <div class="bg-purple-800 p-4 text-center rounded-lg">
+                <div class="text-4xl">
+                    <span class="text-red">#</span>{data.player.rank}
+                </div>
+                {#if data.player.died_by === "Duel"}
+                <p class="mt-2">
+                    <strong>Surivived until final duel</strong>
+                </p>
+                {:else if data.player.died_at}
+                <p class="mt-2">
+                    Surivived until <strong
+                        ><time datetime={data.player.died_at.toISOString()}
+                            >{data.player.died_at.toLocaleTimeString()}</time
+                        ></strong
+                    >
+                </p>
+                {/if}
+            </div>
+        {/if}
         <div class="p-4 text-center rounded-lg">
             <div class="text-4xl">
                 {data.player.kills}
@@ -50,6 +62,18 @@
             </p>
         </div>
     </div>
+    {:else}
+    <header class="my-8 bg-red text-purple-950 p-4 rounded-lg w-fit">
+        <strong>Did Not Participate</strong>
+        <p class="mt-2 text-lg">
+            This player signed up, but did not complete the registration process.
+        </p>
+        <p class="mt-2 text-lg opacity-60">
+            If this was due to technical issues, I'm so sorry! I tried to resolve all of them.
+        </p>
+    </header>
+    {/if}
+
 
     {#if data.player.name_assumption}
         <section class="my-8 bg-red text-purple-950 p-4 rounded-lg w-fit">
