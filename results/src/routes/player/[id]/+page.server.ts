@@ -19,7 +19,7 @@ export const load: PageServerLoad = async ({ params }) => {
         error(404, "Player not found");
     }
 
-    const killsRank = Array.from(players.values()).sort((a, b) => b.kills - a.kills).findIndex(p => p.id === player.id) + 1;
+    const killsRank = Array.from(players.values()).sort((a, b) => b.kills - a.kills || a.rank! - b.rank!).findIndex(p => p.id === player.id) + 1;
 
     const kills = Array.from(players.values()).filter(p => p.died_by === player.id);
 
