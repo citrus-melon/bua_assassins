@@ -1,4 +1,5 @@
 <script>
+    import AliveOverTime from "$lib/charts/alive-over-time.svelte";
     import ColorBadge from "$lib/color-badge.svelte";
     import SearchBar from "$lib/search-bar.svelte";
     const { data } = $props();
@@ -36,6 +37,9 @@
             </div>
             <p class="col-span-2 text-center mt-4 text-pink">Thank you everyone for playing!</p>
         </div>
+    </section>
+    <section class="mt-8">
+        <AliveOverTime players={Array.from(data.players.values())} />
     </section>
     <section class="mt-8 grid grid-cols-1 md:grid-cols-2 justify-items-center">
         <div class="text-center my-4">
